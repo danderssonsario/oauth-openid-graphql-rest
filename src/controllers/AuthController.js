@@ -56,6 +56,7 @@ export class AuthController {
   async authorize (req, res, next) {
     try {
       req.session.user = await this.#service.authorizeUser(req.query.code)
+
       res.redirect('/home')
     } catch (error) {
       next(convertToHttpError(error))
