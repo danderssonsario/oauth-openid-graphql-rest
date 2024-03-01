@@ -1,0 +1,128 @@
+<div id="group_container" class="container shadow-lg px-3 py-1 rounded">
+  <% if(groups.nodes.length) { %>
+    <% groups.nodes.map((group)=> { %>
+      <div id="group" class="card">
+        <h5 class="card-header">
+
+          <div class="row ">
+            <% if (group.avatarUrl) { %>
+              <img id="group_avatar" src="<%= group.avatarUrl %>" alt="avatar">
+              <% } %>
+                <div class="col">
+                  <a href="<%= group.webUrl %>">
+                    <%= group.name %>
+                  </a>
+                  <h6>
+                    <%= group.fullPath %>
+                  </h6>
+                </div>
+
+          </div>
+        </h5>
+
+        <% if(group.projects.nodes.length) { %>
+          <% group.projects.nodes.map((project)=> { %>
+            <% const commit=project.repository.tree.lastCommit %>
+              <div id="project_container" class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Project
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Last commit
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Made by
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="card-body">
+                      <h6 class="card-title">
+                        <% if (project.avatarUrl) { %>
+                          <img id="project_avatar" src="<%= project.avatarUrl %>" alt="avatar">
+                          <% } %>
+                            <a href="<%= project.webUrl %>">
+                              <%= project.name %>
+                            </a>
+                      </h6>
+                      <p class="card-text">
+                        <%= project.fullPath %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-body">
+                      <p class="card-text">
+                        <%= commit.committedDate.split("T")[0] %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-body">
+                      <img id="author" src="<%= commit.authorGravatar %>" alt="gravatar">
+                      <p class="card-text">
+                        <%= commit.author.name %> | @<%= commit.author.username %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <% }) %>
+                <%} else { %>
+                  <div class="jumbotron">
+                    <div class="container">
+                      <div class="col">
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            This group has no projects.
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+                    <% if(group.projects.pageInfo.hasNextPage) { %>
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                        <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+                          title="I'm displayed if more than 5 projects exists!">
+                          <button id="btn" class="btn btn-sm btn-dark" type="button" disabled>Load more
+                            projects</button>
+                        </span>
+                      </div>
+                      <% } %>
+
+      </div>
+      <% }) %>
+        <%} else { %>
+          <div class="jumbotron">
+            <div class="container">
+              <h1 class="display-3">
+                No groups.
+              </h1>
+            </div>
+          </div>
+          <% } %>
+            <% if(groups.pageInfo.hasNextPage) { %>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+                  title="I'm displayed if more than 3 groups exists!">
+                  <button id="btn" class="btn btn-primary" type="button" disabled>Load more groups</button>
+                </span>
+              </div>
+              <% } %>
+
+</div>

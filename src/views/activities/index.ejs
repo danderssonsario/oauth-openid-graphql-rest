@@ -1,0 +1,57 @@
+<div class="container">
+  <table id="table" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Action name</th>
+        <th scope="col">Created at</th>
+        <th scope="col">Target title</th>
+        <th scope="col">Target type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% activities.map((activity, index)=> { %>
+        <tr>
+          <td>
+            <%= index + 1 + (limit * (page - 1)) %>
+          </td>
+          <td>
+            <%= activity.action_name %>
+          </td>
+          <td>
+            <%= activity.created_at %>
+          </td>
+          <td>
+            <%= activity.target_title %>
+          </td>
+          <td>
+            <%= activity.target_type %>
+          </td>
+        </tr>
+
+        <% }) %>
+          <%= %>
+    </tbody>
+  </table>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination flex justify-content-end">
+      <% if (page > 1) { %>
+        <li class="page-item"><a class="page-link" href="/activities?page=<%= page - 1 %>">Prev</a>
+        </li>
+        <% } else { %>
+          <li class="page-item"><a class="page-link disabled-link" href="/activities?page=<%= page - 1 %>">Prev</a>
+          </li>
+          <% } %>
+          <li class="page-item"><a class="page-link disabled-link" href="/activities?page=<%= page + 1 %>">Page <%= page %> of <%= totalPages %></a>
+                </li>
+            <% if (page < totalPages) { %>
+              <li class="page-item"><a class="page-link" href="/activities?page=<%= page + 1 %>">Next</a></li>
+              <% } else { %>
+                <li class="page-item"><a class="page-link disabled-link" href="/activities?page=<%= page + 1 %>">Next</a>
+                </li>
+                <% } %>
+                
+    
+    </ul>
+  </nav>
+</div>
